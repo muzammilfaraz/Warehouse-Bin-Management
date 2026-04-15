@@ -1,0 +1,74 @@
+managed implementation in class zbp_cit_i_whs_22ad067 unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZCIT_I_WHS_22AD067 alias Warehouse
+persistent table zcit_whs_22ad067
+draft table zcit_d_whs_22ad
+lock master total etag LastChangedAt
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+  association _Bins { create; with draft; }
+
+  /* Tell SAP to generate the sysuuid_x16 keys automatically! */
+  field ( readonly, numbering : managed ) WarehouseUuid;
+
+  /* Make admin fields read-only so users can't edit them */
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy, LocalLastChangedAt;
+
+  /* Standard Draft Actions */
+  draft determine action Prepare;
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+
+  mapping for zcit_whs_22ad067
+  {
+    WarehouseUuid = warehouse_uuid;
+    WarehouseId = warehouse_id;
+    ManagerName = manager_name;
+    WarehouseAddress = warehouse_address;
+    ContactEmail = contact_email;
+    ContactPhone = contact_phone;
+    IsActive = is_active;
+    CreatedBy = created_by;
+    CreatedAt = created_at;
+    LastChangedBy = last_changed_by;
+    LastChangedAt = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}
+
+define behavior for ZCIT_I_BNS_22AD067 alias StorageBin
+persistent table zcit_bns_22ad067
+draft table zcit_d_bns_22ad
+lock dependent by _Warehouse
+authorization dependent by _Warehouse
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+  association _Warehouse { with draft; }
+
+  /* Tell SAP to generate the Bin UUID automatically */
+  field ( readonly, numbering : managed ) BinUuid;
+  field ( readonly ) WarehouseUuid;
+  field ( readonly ) LocalLastChangedAt;
+
+  mapping for zcit_bns_22ad067
+  {
+    BinUuid = bin_uuid;
+    WarehouseUuid = warehouse_uuid;
+    BinId = bin_id;
+    StorageType = storage_type;
+    MaxCapacity = max_capacity;
+    BinStatus = bin_status;
+    Remarks = remarks;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}

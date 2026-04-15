@@ -1,0 +1,65 @@
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: { 
+    typeName: 'Storage Bin', 
+    typeNamePlural: 'Storage Bins', 
+    title: { type: #STANDARD, value: 'BinId' }
+  }
+}
+annotate view ZCIT_C_BNS_22AD067 with
+{
+  @UI.facet: [
+    { 
+      id: 'BinDetails', 
+      purpose: #STANDARD, 
+      type: #IDENTIFICATION_REFERENCE, 
+      label: 'Bin Details', 
+      position: 10 
+    }
+  ]
+
+  @UI.hidden: true 
+  BinUuid;
+  @UI.hidden: true 
+  WarehouseUuid;
+
+  @UI: { 
+    lineItem:       [ { position: 10, label: 'Bin ID' } ], 
+    identification: [ { position: 10, label: 'Bin ID' } ] 
+  }
+  BinId;
+
+  @UI: { 
+    lineItem:       [ { position: 20, label: 'Storage Type (e.g., RACK, SHLF)' } ], 
+    identification: [ { position: 20, label: 'Storage Type' } ] 
+  }
+  StorageType;
+
+  @UI: { 
+    lineItem:       [ { position: 30, label: 'Max Capacity' } ], 
+    identification: [ { position: 30, label: 'Max Capacity' } ] 
+  }
+  MaxCapacity;
+
+  /* --- UI COLOR LOGIC MAPPING --- */
+  /* Here we tell Fiori to use the BinCriticality number to color the BinStatus text */
+  @UI: { 
+    lineItem:       [ { position: 40, label: 'Status (E/P/F)', criticality: 'BinCriticality', criticalityRepresentation: #WITHOUT_ICON } ], 
+    identification: [ { position: 40, label: 'Status (E=Empty, P=Partial, F=Full)', criticality: 'BinCriticality' } ] 
+  }
+  BinStatus;
+
+  @UI: { 
+    identification: [ { position: 50, label: 'Remarks / Long Answer' } ],
+    multiLineText: true /* This makes the input box larger for long text! */
+  }
+  Remarks;
+
+  /* Hide the raw color number from the user, they just need to see the colors! */
+  @UI.hidden: true
+  BinCriticality;
+  
+  @UI.hidden: true
+  LocalLastChangedAt;
+}

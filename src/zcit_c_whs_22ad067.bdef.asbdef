@@ -1,0 +1,26 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZCIT_C_WHS_22AD067 alias Warehouse
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Prepare;
+  use action Resume;
+
+  use association _Bins { create; with draft; }
+}
+
+define behavior for ZCIT_C_BNS_22AD067 alias StorageBin
+{
+  use update;
+  use delete;
+
+  use association _Warehouse { with draft; }
+}

@@ -1,0 +1,81 @@
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: { 
+    typeName: 'Warehouse', 
+    typeNamePlural: 'Warehouses', 
+    title: { type: #STANDARD, value: 'WarehouseId' },
+    description: { type: #STANDARD, value: 'ManagerName' }
+  }
+}
+annotate view ZCIT_C_WHS_22AD067 with
+{
+  @UI.facet: [
+    { 
+      id: 'WarehouseDetails', 
+      purpose: #STANDARD, 
+      type: #IDENTIFICATION_REFERENCE, 
+      label: 'Warehouse Information', 
+      position: 10 
+    },
+    { 
+      id: 'StorageBins', 
+      purpose: #STANDARD, 
+      type: #LINEITEM_REFERENCE, 
+      label: 'Managed Storage Bins', 
+      position: 20, 
+      targetElement: '_Bins' 
+    }
+  ]
+
+  @UI.hidden: true
+  WarehouseUuid;
+
+  @UI: { 
+    lineItem:       [ { position: 10, label: 'Warehouse ID' } ], 
+    identification: [ { position: 10, label: 'Warehouse ID' } ], 
+    selectionField: [ { position: 10 } ] 
+  }
+  WarehouseId;
+  
+  @UI: { 
+    lineItem:       [ { position: 20, label: 'Manager Name' } ], 
+    identification: [ { position: 20, label: 'Manager Name' } ],
+    selectionField: [ { position: 20 } ]
+  }
+  ManagerName;
+  
+  @UI: { 
+    identification: [ { position: 30, label: 'Street Address' } ] 
+  }
+  WarehouseAddress;
+
+  @UI: { 
+    identification: [ { position: 40, label: 'Contact Email' } ] 
+  }
+  ContactEmail;
+
+  @UI: { 
+    identification: [ { position: 50, label: 'Contact Phone' } ] 
+  }
+  ContactPhone;
+
+  /* Since this is a boolean field, Fiori will automatically render it as a Checkbox! */
+  @UI: { 
+    lineItem:       [ { position: 60, label: 'Active Status' } ], 
+    identification: [ { position: 60, label: 'Active Status' } ] 
+  }
+  IsActive;
+
+  /* Hide Administrative Data from the standard user */
+  @UI.hidden: true
+  CreatedBy;
+  @UI.hidden: true
+  CreatedAt;
+  @UI.hidden: true
+  LastChangedBy;
+  @UI.hidden: true
+  LastChangedAt;
+  @UI.hidden: true
+  LocalLastChangedAt;
+}

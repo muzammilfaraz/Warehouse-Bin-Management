@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definition for Warehouse App'
+define service ZCIT_UI_WHS_22AD067 {
+  expose ZCIT_C_WHS_22AD067 as Warehouse;
+  expose ZCIT_C_BNS_22AD067 as StorageBin;
+}
